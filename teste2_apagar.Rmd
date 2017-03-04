@@ -1,0 +1,84 @@
+---
+title: "Untitled"
+author: "Fernando de Souza Bastos"
+date: "4 de março de 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Box-Plot dos valores simulados dos parâmetros.
+
+```{r,fig.align='center',warning=FALSE,message=FALSE}
+
+library(ggplot2)
+library(dplyr)
+library(readr)
+df1 <- read_delim("D:/Downloads/d1.csv", ";", escape_double = FALSE, col_types = cols(val_Sim = col_number()),trim_ws = TRUE)
+attach(df1)
+df1$parametros <- factor(df1$parametros,
+  levels = c("gamma0","gamma1","gamma2","beta0","beta1","beta2","phi1", "rho"), ordered = TRUE)
+
+g1 <- ggplot(df1, aes(x = parametros,y = val_Sim)) +
+  geom_boxplot(aes(fill = parametros),alpha = .6,size = .5)+
+  stat_boxplot(geom ='errorbar') +
+  guides(fill=FALSE)+geom_point()+
+  ggtitle("Boxplot com os valores estimados") +   xlab("Parâmetros")+
+  scale_y_continuous(name = "Valores Estimados",
+                     breaks = seq(-0.5, 2, 0.5),
+                     limits=c(-0.5, 2))+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r,fig.align='center',warning=FALSE}
+
+library(readr)
+df2 <- read_delim("D:/Downloads/d2.csv", ";", escape_double = FALSE, col_types = cols(val_Sim = col_number()),trim_ws = TRUE)
+
+g2 <- ggplot(df2, aes(y = val_Sim, x = parametros)) +
+  geom_boxplot(aes(fill = parametros),alpha = .6,size = .5)+
+  stat_boxplot(geom ='errorbar') +
+  guides(fill=FALSE)+geom_point()+
+  ggtitle("Boxplot com os valores estimados") +   xlab("Parâmetros") +
+  scale_y_continuous(name = "Valores Estimados",
+                     breaks = seq(-0.5, 2, 0.5),
+                     limits=c(-0.5, 2))+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+```{r,fig.align='center',warning=FALSE}
+
+library(readr)
+df3 <- read_delim("D:/Downloads/d3.csv", ";", escape_double = FALSE, col_types = cols(val_Sim = col_number()),trim_ws = TRUE)
+
+g3 <- ggplot(df3, aes(y = val_Sim, x = parametros)) +
+  geom_boxplot(aes(fill = parametros),alpha = .6,size = .5)+
+  stat_boxplot(geom ='errorbar') +
+  guides(fill=FALSE)+geom_point()+
+  ggtitle("Boxplot com os valores estimados") +   xlab("Parâmetros") +
+  scale_y_continuous(name = "Valores Estimados",
+                     breaks = seq(-0.5, 2, 0.5),
+                     limits=c(-0.5, 2))+
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+```{r,echo=TRUE, warning=FALSE,fig.align='center',fig.width=12,fig.height=10}
+
+library(readr)
+df4 <- read_delim("D:/Downloads/d4.csv", ";", escape_double = FALSE, col_types = cols(val_Sim = col_number()),trim_ws = TRUE)
+
+
+g4 <- ggplot(df4, aes(y = val_Sim, x = parametros)) +
+  geom_boxplot(aes(fill = parametros),alpha = .6,size = .5)+
+  stat_boxplot(geom ='errorbar') +
+  guides(fill=FALSE)+geom_point()+
+  ggtitle("Boxplot com os valores estimados") +   xlab("Parâmetros") +
+  scale_y_continuous(name = "Valores Estimados",
+                     breaks = seq(-0.5, 2, 0.25),
+                     limits=c(-0.5, 2))+
+  theme(plot.title = element_text(hjust = 0.5))
+library(gridExtra)
+grid.arrange(g1,g2, g3, g4)
+
+```
